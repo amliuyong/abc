@@ -1,4 +1,4 @@
-/*
+package com.myapp.sharded;/*
  *  MIT License
  *
  *  Copyright (c) 2019 Michael Pogrebinsky - Distributed Systems & Cloud Computing with Java

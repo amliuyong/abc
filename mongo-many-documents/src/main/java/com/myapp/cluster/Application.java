@@ -1,4 +1,4 @@
-package com.myapp;
+package com.myapp.cluster;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.ReadPreference;

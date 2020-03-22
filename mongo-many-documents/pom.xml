@@ -57,7 +57,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>MoviesGenerator</mainClass>
+                            <mainClass>com.myapp.sharded.MoviesGenerator</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>

@@ -583,7 +583,7 @@ mongos>
 
 * add documents
 
-run MoviesGenerator - gen 10000 movies
+run com.myapp.sharded.MoviesGenerator - gen 10000 movies
 
 ```
 mongos> sh.status()
@@ -670,7 +670,7 @@ sh.status(true)
 
 * add documents (hashed)
 
-run UsersGenerator - gen 10000 users
+run com.myapp.sharded.UsersGenerator - gen 10000 users
 
 ```
 
