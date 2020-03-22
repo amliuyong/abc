@@ -14,6 +14,19 @@
             <scope>runtime</scope>
         </dependency>
 ```
+```
+
+# Root logger option
+log4j.rootLogger=WARN, stdout
+# Direct log messages to stdout
+log4j.appender.stdout=org.apache.log4j.ConsoleAppender
+log4j.appender.stdout.Target=System.out
+log4j.appender.stdout.layout=org.apache.log4j.PatternLayout
+log4j.appender.stdout.layout.ConversionPattern=%d{HH:mm:ss} %-5p %c{1}:%L - %m%n
+
+log4j.logger.com.myapp=INFO
+
+```
 
 # maven-assembly-plugin
 
@@ -292,3 +305,114 @@ public static class TransactionDeserializer implements Deserializer<Transaction>
     }
 
 ```
+
+# MongoDB
+
+    mkdir -p /usr/local/var/mongod/data/db
+    less mongod.conf
+```
+net:
+    bindIp: 127.0.0.1
+    # MongoDB server listening port
+    port: 27017
+storage:
+    # Data store directory
+    dbPath: "/usr/local/var/mongod/data/db"
+systemLog:
+    # Write logs to log file
+    destination: file
+    path: "/usr/local/var/mongod/mongodb.log"  
+
+```    
+   
+**Start Server**   
+ 
+    bin/mongod --config mongod.conf -v
+
+    ./bin/mongo --port 27018
+
+**Commands**
+     
+     help
+     show dbs
+     show collections
+     
+     use online-school
+
+     db.createCollection("students')
+     
+     db.students.insertOne( {"name": "Michael", "age": 25, favorite_colors: ["blue", "yellow"]} )
+     db.students.insertOne( { "_id" : "5bc",  "name": "Michael2", "age": 25, favorite_colors: ["blue", "yellow"]} )
+     
+     db.students.find().pretty()
+     
+     db.students.insertMany( [
+        {"name": "Michael3", "age": 23, favorite_colors: ["blue", "yellow", "white" ]},
+        {"name": "Michael4", "age": 24, favorite_colors: ["blue", "yellow", "green"]}
+     ] )
+     
+     db.students.find({ name: "Michael"})
+     
+     db.students.find({ age: { $gt: 24} })
+     
+     db.students.find( { $or : [ {favorite_colors: "blue" }, {favorite_colors: "yellow"}  ] } ).limit(2)
+     
+     db.students.updateOne( {"name": "Michael"}, {$set : {age: 32}} )
+     
+     db.students.deleteMany( { age: { $lt: 25 } } )
+
+**Launch cluster**
+    
+    mkdir -p /usr/local/var/mongodb/rs0-1
+    mkdir -p /usr/local/var/mongodb/rs0-2
+    mkdir -p /usr/local/var/mongodb/rs0-3
+    
+    bin/mongod --replSet rs0 --port 27017 --bind_ip 127.0.0.1 --dbpath /usr/local/var/mongodb/rs0-1 --oplogSize 128
+    bin/mongod --replSet rs0 --port 27018 --bind_ip 127.0.0.1 --dbpath /usr/local/var/mongodb/rs0-2 --oplogSize 128
+    bin/mongod --replSet rs0 --port 27019 --bind_ip 127.0.0.1 --dbpath /usr/local/var/mongodb/rs0-3 --oplogSize 128
+    
+    
+    ./bin/mongo --port 27017
+    
+    rs.initiate({
+       _id: "rs0",
+       members: [
+         {
+            _id: 0,
+            host: "127.0.0.1:27017"
+         },
+         
+         {
+            _id: 1,
+            host: "127.0.0.1:27018"
+          },
+           
+          {
+            _id: 2,
+            host: "127.0.0.1:27019"
+          }
+       ]
+    })
+    
+**Java code to connect cluster**
+
+```java
+
+    private static final String MONGO_DB_URL = "mongodb://127.0.0.1:27017,127.0.0.1:27018,127.0.0.1:27019/?replicaSet=rs0";
+
+    MongoCollection<Document> courseCollection = database.getCollection(courseName)
+                    .withWriteConcern(WriteConcern.MAJORITY)
+                    .withReadPreference(ReadPreference.primaryPreferred());
+
+```
+
+**Sharded MongoDB Cluster**
+
+![Image](./resources/sharded-mongodb.jpg?raw=true)
+
+    
+
+
+
+
+   

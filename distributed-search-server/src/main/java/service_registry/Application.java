@@ -5,6 +5,7 @@ import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.WatchedEvent;
 import org.apache.zookeeper.Watcher;
 import org.apache.zookeeper.ZooKeeper;
+import org.slf4j.LoggerFactory;
 import service_registry.cluster.management.LeaderElection;
 import service_registry.cluster.management.ServiceRegistry;
 
