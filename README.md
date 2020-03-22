@@ -408,7 +408,7 @@ systemLog:
 
 **Sharded MongoDB Cluster**
 
-![Image](./tree/master/resources/sharded-mongodb.jpg?raw=true)
+![Image](./resources/sharded-mongodb.jpg?raw=true)
 
 * launch config server
 
@@ -706,7 +706,7 @@ mongos>
 
 * Fix hot movies read
 
-![Image](./tree/master/resources/sharded-mongodb-hotread.jpg?raw=true)
+![Image](./resources/sharded-mongodb-hotread.jpg?raw=true)
 
 db.movies.find({...}).readPref( {"secondaryPreferred"} )
 
