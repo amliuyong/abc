@@ -1,0 +1,8 @@
+.idea
+*.jar
+target
+LICENSE
+.DS_Store
+*.iml
+
+

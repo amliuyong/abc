@@ -41,6 +41,40 @@
             </plugin>
 ```
 
+# Zoo keeper
+    cd zookeeper/zookeeper-3.4.14/
+
+**Config file**
+    
+    copy conf/zoo_sample.cfg conf/zoo.cfg
+    ./bin/zkServer.sh start
+
+**Zoo keeper client**
+
+```bash
+
+./zkCli.sh
+
+ls /
+
+create /parent "some parent data"
+
+create /parent/child "some child data"
+
+ls /parent
+
+get /parent
+
+get /parent/child
+
+rmr /parent
+
+create /election ""
+
+set /target_znode "some new data"
+ 
+```
+
 # protoc
 
 download:
